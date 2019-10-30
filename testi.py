@@ -1,1 +1,2 @@
-print("Hello world")
+tuloste = "Hello world"
+print(tuloste)*2
