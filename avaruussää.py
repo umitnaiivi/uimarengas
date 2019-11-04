@@ -6,13 +6,25 @@ html = request.urlopen(url).read().decode('utf8')
 
 soup = BeautifulSoup(html, 'html.parser')
 
-print("Kerron sinulle tämän päiväisen avaruussään:\n")
+print("Kerron sinulle tämän päivän avaruussään:\n")
 
-# find_all -metodi luo listan asioista, joiden tag on p
-# käydään läpi for-loopilla:
-for p in soup.find_all('p'):
-    print(p.get_text())
+# tulostetaan ensimmäinen otsikko, joka kertoo avaruussäästä:
+otsikot = [o.text for o in soup.find_all('h1')]
+print(otsikot[1])
 
+# tulostetaan teksti, joka koskee avaruussäätä:
+tekstit = [t.text for t in soup.find_all('p')]
+for t in tekstit[:2]:
+    print(t)
 
-# Ongelma: miten filtteröidä hakukomentoa paremmin? Esimerkiks tää printtaa
-# kaikki 'p' tägätyt tekstit, vaikka vaan osa tosta saattaa on olennaista
+# haetaan taulokosta revontulten todennäköisyys ja tulostetaan ne:
+taulukko = [t.text for t in soup.find_all('td')]
+aika = [line for line in taulukko[1:4]]
+saa = [line for line in taulukko[5:]]
+rivit = [line for line in zip(aika, saa)]
+
+print(taulukko[4])
+for rivi in rivit:
+    print(rivi[0] + ': ' + rivi[1])
+
+# ohjelmasta saa elegantimman näköisen käyttämällä esim regexiä rivin alussa olevien tyhjien poistamiseen
