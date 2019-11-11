@@ -24,6 +24,15 @@ def rewrite_query(query):  # rewrite every token in the query
 def rewrite_token(t):
     return d.get(t, 'sparse_td_matrix[t2i["{:s}"]].todense()'.format(t))  # Make retrieved rows dense
 
+def get_documents(syote):
+    hits_matrix = eval(rewrite_query(syote))
+    hits_list = list(hits_matrix.nonzero()[1])
+    if not hits_list:
+        print("No matching documents!")
+    else:
+        for i, doc_idx in enumerate(hits_list):
+            print("Matching doc #{:d}: {:s}".format(i, documents[doc_idx]))
+
 def query():
     print("This is a search engine for words in a document")
     print("Here are some examples for you:")
@@ -37,12 +46,11 @@ def query():
             print("Thank you, see you soon!")
             break
         else:
-            hits_matrix = eval(rewrite_query(syote))
-            hits_list = list(hits_matrix.nonzero()[1])
-            if not hits_list:
-                print("No matching documents!")
-            else:
-                for i, doc_idx in enumerate(hits_list):
-                    print("Matching doc #{:d}: {:s}".format(i, documents[doc_idx]))
+            try:
+                get_documents(syote)
+            except KeyError:
+                print("Check your query!")
+            except SyntaxError:
+                print("Check your query!")
 
 query()
