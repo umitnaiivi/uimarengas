@@ -1,22 +1,29 @@
-# test
-
 from sklearn.feature_extraction.text import CountVectorizer
 
-documents = ["I heheheh This is a silly example",
-             "A better example",
-             "Nothing to see here",
-             "This is a great and long example"]
+# Luetaan tekstitiedosto kovalevyltä:
 
+try:
+    file_name = input("Where is your file?\n")
+    with open(file_name, encoding="utf8") as f:
+        documents = f.read().replace('\n', " ")
+        documents = documents.split(sep="</article>")
+
+except FileNotFoundError:
+    print("File not found")
+
+# Indeksoidaan sanaesiintymät
 
 cv = CountVectorizer(lowercase=True, binary=True)
 sparse_matrix = cv.fit_transform(documents)
 sparse_td_matrix = sparse_matrix.T.tocsr()
 t2i = cv.vocabulary_
 
+
 d = {"and": "&", "AND": "&",
      "or": "|", "OR": "|",
      "not": "1 -", "NOT": "1 -",
      "(": "(", ")": ")"}  # operator replacements
+
 
 def rewrite_query(query):  # rewrite every token in the query
     return " ".join(rewrite_token(t) for t in query.split())
@@ -41,7 +48,7 @@ def query():
     print("Press q to quit and print result")
 
     while True:
-        syote = input("What do you want to search from documents?")
+        syote = input("What do you want to search from documents?\n")
         if syote == "q" or syote == 'Q':
             print("Thank you, see you soon!")
             break
