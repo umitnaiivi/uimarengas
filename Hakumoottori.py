@@ -7,13 +7,18 @@ try:
     with open(file_name, encoding="utf8") as f:
         documents = f.read().replace('\n', " ")
         documents = documents.split(sep="</article>")
-
+except PermissionError:
+    print("Incorrect path")
 except FileNotFoundError:
-    print("File not found")
+    print("Incorrect path")
+except KeyError:
+    print("Incorrect path")
+except SyntaxError:
+    print("Incorrect path")
 
 # Indeksoidaan sanaesiintymät
 
-cv = CountVectorizer(lowercase=True, binary=True)
+cv = CountVectorizer(lowercase=True, binary=True, token_pattern='(?u)\\b\\w+\\b')
 sparse_matrix = cv.fit_transform(documents)
 sparse_td_matrix = sparse_matrix.T.tocsr()
 t2i = cv.vocabulary_
