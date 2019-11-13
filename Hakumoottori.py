@@ -1,3 +1,5 @@
+import re
+
 from sklearn.feature_extraction.text import CountVectorizer
 
 # Luetaan tekstitiedosto kovalevyltä:
@@ -46,7 +48,7 @@ def get_documents(syote):
         print("No matching documents!")
     else:
         for i, doc_idx in enumerate(hits_list):
-            print("Matching doc #{:d}: {:s}".format(i, documents[doc_idx][:100]))
+            print("Matching doc #{:d}: {:s}".format(i, re.match(r'(?:[^.:;]+[.:;]){1}', documents[doc_idx]).group()))
 
 # käyttöliittymä, joka kysyy syötteen:
 def query():
