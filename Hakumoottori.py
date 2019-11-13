@@ -47,8 +47,8 @@ def get_documents(syote):
     if not hits_list: # if there are no documents found for the search word, i.e. the hits_list is empty:
         print("No matching documents!")
     else:
-        for i, doc_idx in enumerate(hits_list):
-            print("Matching doc #{:d}: {:s}".format(i, re.match(r'(?:[^.:;]+[.:;]){1}', documents[doc_idx]).group())) # gets the first sentence
+        for i, doc_idx in enumerate(hits_list[:10]):
+            print("Matching doc #{:d}: {:s}".format(i+1, re.match(r'(?:[^.:;]+[.:;]){1}', documents[doc_idx]).group())) # gets the first sentence
 
 # käyttöliittymä, joka kysyy syötteen:
 def query():
