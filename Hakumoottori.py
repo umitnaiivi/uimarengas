@@ -48,7 +48,7 @@ def get_documents(syote):
         print("No matching documents!")
     else:
         for i, doc_idx in enumerate(hits_list):
-            print("Matching doc #{:d}: {:s}".format(i, re.match(r'(?:[^.:;]+[.:;]){1}', documents[doc_idx]).group()))
+            print("Matching doc #{:d}: {:s}".format(i, re.match(r'(?:[^.:;]+[.:;]){1}', documents[doc_idx]).group())) # gets the first sentence
 
 # käyttöliittymä, joka kysyy syötteen:
 def query():
