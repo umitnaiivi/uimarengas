@@ -2,6 +2,7 @@ import re
 
 from sklearn.feature_extraction.text import CountVectorizer
 
+
 # Luetaan tekstitiedosto kovalevyltä:
 
 def read_file():

@@ -81,12 +81,15 @@ def query():
     print("NOT word1 or word2")
     print("( NOT word1 OR word2 ) AND word3")
     print("Press q to quit")
+    print("Press r to return to main menu")
 
     while True:
         syote = input("What do you want to search from documents?\n")
         if syote == "q" or syote == 'Q':
             print("Thank you for using our Hakumoottori, see you soon!")
             break
+        if syote == "r" or syote == "R":
+            main()
         else:
             try:
                 get_documents(syote)
@@ -95,6 +98,28 @@ def query():
             except SyntaxError:
                 print("Check your query!")
 
-# query()
 
-search_gutenberg("Helsinki")
+def main():
+    while True:
+        syote = input("Do you want to use a boolean or tfidf engine?\n"
+                      "(1): Boolean\n"
+                      "(2): TF-IDF\n"
+                      "(Q): quit\n")
+        if syote == "q" or syote == "Q":
+            print("bye")
+            break
+        if syote == "1":
+            print("initializing boolean engine...")
+            query()
+
+        elif syote == "2":
+            try:
+                print("initializing tfidf engine...")
+                search_gutenberg("helsinki")
+            except KeyError:
+                print("Check your query!")
+            except SyntaxError:
+                print("Check your query!")
+
+
+main()
