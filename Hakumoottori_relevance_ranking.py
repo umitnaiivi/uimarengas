@@ -115,10 +115,12 @@ def main():
         elif syote == "2":
             try:
                 print("initializing tfidf engine...")
-                search_gutenberg("helsinki")
+                search_gutenberg(input("what do you want to search for?\n"))
             except KeyError:
                 print("Check your query!")
             except SyntaxError:
+                print("Check your query!")
+            except IndexError:
                 print("Check your query!")
 
 
