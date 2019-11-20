@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 import numpy as np
-import re
 
 
 # Initialize flask instance
@@ -78,4 +77,6 @@ def search():
     if syote:
         for i, (score, doc_idx) in enumerate(ranked_scores_and_doc_ids):
             matches.append()
+
+    return render_template('index.html')
 
