@@ -25,12 +25,12 @@ def read_file():
 # Indeksoidaan sanaesiintymät
 
 documents = read_file()
-cv = CountVectorizer(lowercase=True, binary=True, token_pattern='(?u)\\b\\w+\\b')
+cv = CountVectorizer(lowercase=True, binary=True, token_pattern='(?u)\\b\\w+\\b', ngram_range=(1,2))
 sparse_matrix = cv.fit_transform(documents)
 sparse_td_matrix = sparse_matrix.T.tocsr()
 t2i = cv.vocabulary_
 
-gv = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2")
+gv = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2", ngram_range=(1,2))
 g_matrix = gv.fit_transform(documents).T.tocsr()
 
 
