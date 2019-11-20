@@ -4,12 +4,18 @@
         <title>Flask example</title>
     </head>
     <body>
-        <h1>Find pictures</h1>
+        <h1>Which search engine you want to use?</h1>
         <!--Reload the page with variable "query" in the URL-->
         <form>
             <input type="text" name="query" autofocus>
-            <input type="submit" value="Search">
+            <input type="submit" value="boolean">
         </form>
+		
+        <form>
+            <input type="text" name="query" autofocus>
+            <input type="submit" value="tfifd">
+        </form>
+		
         <table>
             <!--Go through each item in the "matches" variable sent from
                 search() function in the Flask app-->
