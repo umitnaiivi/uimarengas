@@ -2,6 +2,7 @@ import re
 
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from nltk.stem.porter import PorterStemmer
 
 
 # Luetaan tekstitiedosto kovalevyltä:
@@ -30,7 +31,7 @@ sparse_matrix = cv.fit_transform(documents)
 sparse_td_matrix = sparse_matrix.T.tocsr()
 t2i = cv.vocabulary_
 
-gv = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2", ngram_range=(1,2))
+gv = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2", ngram_range=(1,2), stop_words='english')
 g_matrix = gv.fit_transform(documents).T.tocsr()
 
 
@@ -80,16 +81,13 @@ def query():
     print("Here are some examples for you:")
     print("NOT word1 or word2")
     print("( NOT word1 OR word2 ) AND word3")
-    print("Press q to quit")
     print("Press r to return to main menu")
 
     while True:
         syote = input("What do you want to search from documents?\n")
-        if syote == "q" or syote == 'Q':
+        if syote == "r" or syote == 'R':
             print("Thank you for using our Hakumoottori, see you soon!")
             break
-        if syote == "r" or syote == "R":
-            main()
         else:
             try:
                 get_documents(syote)
