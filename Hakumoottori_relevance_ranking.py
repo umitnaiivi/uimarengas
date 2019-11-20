@@ -1,10 +1,10 @@
 import re
-
+import nltk
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from nltk.stem.porter import PorterStemmer
 
-
+stemmer = PorterStemmer
 # Luetaan tekstitiedosto kovalevyltä:
 
 def read_file():
@@ -34,6 +34,10 @@ t2i = cv.vocabulary_
 gv = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2", ngram_range=(1,2), stop_words='english')
 g_matrix = gv.fit_transform(documents).T.tocsr()
 
+def tokenize(text):
+    tokens = nltk.word_tokenize(text)
+    stems = [stemmer.stem(item) for item in tokens]
+    return stems
 
 def search_gutenberg(query_string):
     # Vectorize query string
@@ -43,9 +47,7 @@ def search_gutenberg(query_string):
     hits = np.dot(query_vec, g_matrix)
 
     # Rank hits
-    ranked_scores_and_doc_ids = \
-        sorted(zip(np.array(hits[hits.nonzero()])[0], hits.nonzero()[1]),
-               reverse=True)
+    ranked_scores_and_doc_ids = sorted(zip(np.array(hits[hits.nonzero()])[0], hits.nonzero()[1]), reverse=True)
 
     # Output result
     print("Your query '{:s}' matches the following documents:".format(query_string))
