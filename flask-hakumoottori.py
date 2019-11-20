@@ -1,4 +1,4 @@
-from flask import Flask, render_temlate, request
+from flask import Flask, render_template, request
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 import numpy as np
 import re
@@ -32,7 +32,6 @@ cv = CountVectorizer(lowercase=True, binary=True, token_pattern='(?u)\\b\\w+\\b'
 sparse_matrix = cv.fit_transform(documents)
 sparse_td_matrix = sparse_matrix.T.tocsr()
 t2i = cv.vocabulary_
-
 gv = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2", ngram_range=(1,2))
 g_matrix = gv.fit_transform(documents).T.tocsr()
 
@@ -137,6 +136,6 @@ def search():
     matches = []
     # if syote exists
     if syote:
-    for i, (score, doc_idx) in enumerate(ranked_scores_and_doc_ids):
-        matches.append()
+        for i, (score, doc_idx) in enumerate(ranked_scores_and_doc_ids):
+            matches.append()
 
