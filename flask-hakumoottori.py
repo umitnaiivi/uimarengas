@@ -74,7 +74,6 @@ def home():
         matches.append(("Your query '{:s}' matches the following documents:".format(syote)))
         for i, (score, doc_idx) in enumerate(ranked_scores_and_doc_ids):
             matches.append(("Doc #{:d} (score: {:.4f}): {:s}".format(i, score, documents[doc_idx])))
-            print(matches)
 
 
     return render_template("flask-haku.html", matches=matches)
