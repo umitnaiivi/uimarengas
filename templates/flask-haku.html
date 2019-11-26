@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Flask example</title>
+    </head>
+    <body>
+        <h1>Search</h1>
+        <h3>from the 100 article wikipedia txt file</h3>
+        <!--Reload the page with variable "query" in the URL-->
+        <form>
+            <input type="text" name="query" autofocus>
+            <input type="submit" value="Search">
+        </form>
+        <table>
+            <!--Go through each item in the "matches" variable sent from
+                search() function in the Flask app-->
+            {% for item in matches %}
+            <tr>
+                <!--display the first 1000 characters of each result-->
+                <td>{{ item[:1000] }}</td>
+            </tr>
+            <!--End for loop-->
+            {% endfor %}
+        </table>
+    </body>
+</html>
