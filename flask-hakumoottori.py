@@ -5,15 +5,15 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
 app = Flask(__name__)
 
-@app.route("/")
+
+
 
 def read_file():
     try:
-        file_name = ("C:\desktop-12-11-2019/docs.txt")
+        file_name = "D:/nlp-ir-2019/uimarengas/docs.txt"
         with open(file_name, encoding="utf8") as f:
             documents = f.read().replace('\n', " ")
             documents = documents.split(sep="</article>")
-            print(documents[0])
     except PermissionError:
         print("Incorrect path")
     except FileNotFoundError:
@@ -38,6 +38,8 @@ gv = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2",
 g_matrix = gv.fit_transform(documents).T.tocsr()
 print("indexing completed. variable documents is now a list of articles as strings.")
 
+
+@app.route("/")
 def home():
     return render_template("flask-haku.html")
 
