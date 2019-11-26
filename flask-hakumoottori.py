@@ -1,12 +1,21 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import re
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
 app = Flask(__name__)
 
+d = {"and": "&", "AND": "&",
+     "or": "|", "OR": "|",
+     "not": "1 -", "NOT": "1 -",
+     "(": "(", ")": ")"}  # operator replacements
 
 
+def rewrite_query(query):  # rewrite every token in the query
+    return " ".join(rewrite_token(t) for t in query.split())
+
+def rewrite_token(t):
+    return d.get(t, 'sparse_td_matrix[t2i["{:s}"]].todense()'.format(t))  # Make retrieved rows dense
 
 def read_file():
     try:
@@ -41,7 +50,34 @@ print("indexing completed. variable documents is now a list of articles as strin
 
 @app.route("/")
 def home():
-    return render_template("flask-haku.html")
+
+    #get query from URL variable
+    syote = request.args.get('query')
+
+    matches = []
+
+    if syote is not None:
+
+        # this is the tdf if search we used earlier
+
+        query_vec = gv.transform([syote]).tocsc()
+
+        # Cosine similarity
+        hits = np.dot(query_vec, g_matrix)
+
+        # Rank hits
+        ranked_scores_and_doc_ids = \
+            sorted(zip(np.array(hits[hits.nonzero()])[0], hits.nonzero()[1]),
+                   reverse=True)
+
+        # Output result
+        matches.append(("Your query '{:s}' matches the following documents:".format(syote)))
+        for i, (score, doc_idx) in enumerate(ranked_scores_and_doc_ids):
+            matches.append(("Doc #{:d} (score: {:.4f}): {:s}".format(i, score, documents[doc_idx])))
+            print(matches)
+
+
+    return render_template("flask-haku.html", matches=matches)
 
 if __name__ == "__main__":
     app.run(debug=True)

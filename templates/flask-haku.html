@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <head>
+asdff    <head>
         <meta charset="utf-8">
         <title>Flask example</title>
     </head>
@@ -16,10 +16,8 @@
                 search() function in the Flask app-->
             {% for item in matches %}
             <tr>
-                <!--Display the name of the item based on the "name" key-->
-                <td>{{ item["name"] }}</td>
-                <!--Display the image of the item based on the "source" key-->
-                <td><img src="/static/{{ item["source"] }}" style="width: 400px; height 100%"></td>
+                <!--display the first 100 characters of each result-->
+                <td>{{ item[:100] }}</td>
             </tr>
             <!--End for loop-->
             {% endfor %}
