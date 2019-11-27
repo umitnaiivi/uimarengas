@@ -19,7 +19,7 @@ def rewrite_token(t):
 
 def read_file():
     try:
-        file_name = "D:/nlp-ir-2019/uimarengas/docs.txt"
+        file_name = "enwiki-20181001-corpus.100-articles.txt"
         with open(file_name, encoding="utf8") as f:
             documents = f.read().replace('\n', " ")
             documents = documents.split(sep="</article>")
