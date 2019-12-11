@@ -6,10 +6,10 @@ html = request.urlopen(url).read().decode('utf8')
 
 soup = BeautifulSoup(html, 'html.parser')
 
-print("Tämän hetken uusimmat uutisaiheet ovat:\n")
+print("artikkelin teksti:\n")
 teksti = soup.find_all('p')
 kappaleet = []
 for kappale in teksti:
-    uusimmat.append(kappale.get_text())
+    kappaleet.append(kappale.get_text())
 
 print(kappaleet)

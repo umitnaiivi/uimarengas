@@ -1,13 +1,13 @@
 from urllib import request
 from bs4 import BeautifulSoup
 
-url = "https://yle.fi/uutiset/tuoreimmat"
+url = "https://yle.fi/uutiset/3-11112373"
 html = request.urlopen(url).read().decode('utf8')
 
 soup = BeautifulSoup(html, 'html.parser')
 
 print("Tämän hetken uusimmat uutisaiheet ovat:\n")
-otsikot = soup.find_all('h1')[1:6]
+otsikot = soup.find_all('p')[1:6]
 uusimmat = []
 for otsikko in otsikot:
     uusimmat.append(otsikko.get_text())
