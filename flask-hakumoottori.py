@@ -22,6 +22,7 @@ def read_file():
         file_name = "enwiki-20181001-corpus.100-articles.txt"
         with open(file_name, encoding="utf8") as f:
             documents = f.read().replace('\n', " ")
+            documents = documents.replace('\\\'', '\'')
             documents = documents.split(sep="</article>")
     except PermissionError:
         print("Incorrect path")
@@ -71,10 +72,11 @@ def home():
                    reverse=True)
 
         # Output result
-        matches.append(("Your query '{:s}' matches the following documents:".format(syote)))
         for i, (score, doc_idx) in enumerate(ranked_scores_and_doc_ids):
-            matches.append(("Doc #{:d} (score: {:.4f}): {:s}".format(i, score, documents[doc_idx])))
-
+            doc = documents[doc_idx]
+            doc = doc.split('>')
+            doc[0] = doc[0].replace('<article name=', '')
+            matches.append({'score': score, 'name': doc[0], 'document': doc[1]})
 
     return render_template("flask-haku.html", matches=matches)
 
