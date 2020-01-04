@@ -12,4 +12,9 @@ kappaleet = []
 for kappale in teksti:
     kappaleet.append(kappale.get_text())
 
+kappaleet = " ".join(kappaleet)
+
+
+
 print(kappaleet)
+print(len(kappaleet))
