@@ -47,22 +47,21 @@ d = {"and": "&", "AND": "&",
 def rewrite_query(query):  # rewrite every token in the query
     return " ".join(rewrite_token(t) for t in query.split())
 
+
 def rewrite_token(t):
     return d.get(t, 'sparse_td_matrix[t2i["{:s}"]].todense()'.format(t))  # Make retrieved rows dense
 
 
 # Indeksoidaan sanaesiintymät
-print("initializing indexing")
 
 documents = artikkelit
 cv = CountVectorizer(lowercase=True, binary=True, token_pattern='(?u)\\b\\w+\\b', ngram_range=(1,2))
-print("indexing in progress")
 sparse_matrix = cv.fit_transform(documents)
 sparse_td_matrix = sparse_matrix.T.tocsr()
 t2i = cv.vocabulary_
 gv = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2", ngram_range=(1,2))
 g_matrix = gv.fit_transform(documents).T.tocsr()
-print("indexing completed. variable documents is now a list of articles as strings.")
+
 
 
 @app.route("/")
