@@ -7,11 +7,16 @@ import re
 
 # Get links of recent news
 
+
+def remove_duplicate_links(x):
+    return list(dict.fromkeys(x))
+
+
 url = "https://yle.fi/uutiset/osasto/news/"
 html = rq.urlopen(url).read().decode('utf8')
 soup = BeautifulSoup(html, 'html.parser')
-linkit = [link.get("href") for link in
-          soup.find_all("a", attrs={"href": re.compile("^https://yle.fi/uutiset/osasto/news")})]
+linkit = remove_duplicate_links([link.get("href") for link in
+          soup.find_all("a", attrs={"href": re.compile("^https://yle.fi/uutiset/osasto/news")})])
 
 
 # Get text of recent news
@@ -85,7 +90,7 @@ def home():
         # Output result
         for i, (score, doc_idx) in enumerate(ranked_scores_and_doc_ids):
             doc = documents[doc_idx]
-            matches.append({'score': score, 'name': doc[:10]})
+            matches.append({'score': score, 'name': doc[:300]})
 
     return render_template("yle-haku.html", matches=matches)
 
