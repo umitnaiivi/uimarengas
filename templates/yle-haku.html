@@ -1,25 +1,49 @@
 <!DOCTYPE html>
 <html>
+<link href='https://fonts.googleapis.com/css?family=Moul' rel='stylesheet'>
+<style>
+body {
+    font-family: 'Moul';font-size: 16px;
+}
+</style>
     <head>
         <meta charset="utf-8">
-        <title>Flask example</title>
+        <title>recent news from yle</title>
     </head>
     <body>
-        <h1>Find articles</h1>
+        <h1 style="color:navy;">Etsi YLE:n uutisista</h1>
         <!--Reload the page with variable "query" in the URL-->
         <form>
             <input type="text" name="query" autofocus>
             <input type="submit" value="Search">
         </form>
+
+        <div class="dropdown">
+  <button class="dropbtn">Valitse kategoria</button>
+  <div class="dropdown-content">
+    <a href="#">English</a>
+    <a href="#">Kotimaa (wip)</a>
+    <a href="#">Ulkomaat (wip)</a>
+  </div>
+</div>
+
+
+
         <table>
             <!--Go through each item in the "matches" variable sent from
                 search() function in the Flask app-->
             {% for item in matches %}
             <tr>
                 <!--Display the score of the item based on the "score" key-->
-                <td>{{ item["score"] }}</td>
+                <th>{{ item["score"] }}</th>
                 <!--Display the name of the item based on the "name" key-->
-                <td>{{ item["name"] }}"</td>
+                <td>{{ item["name"] }} . . . </td>
+            </tr>
+            <tr>
+
+            </tr>
+            <tr>
+
             </tr>
             <!--End for loop-->
             {% endfor %}

@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request
-import re
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+
+
+
 
 app = Flask(__name__)
 
