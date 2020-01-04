@@ -23,7 +23,7 @@ linkit = remove_duplicate_links([link.get("href") for link in
 
 artikkelit = []
 puhtaat_linkit = []
-for linkki in linkit[5:-4]: # sliced off some non-news links such as an address to contact yle etc.
+for linkki in linkit[3:-4]: # sliced off some non-news links such as an address to contact yle etc.
     html = rq.urlopen(linkki).read().decode("utf8")
     soup = BeautifulSoup(html, "html.parser")
     teksti = soup.article.find_all("p")     #teksti = list of paragraphs
@@ -75,7 +75,7 @@ def home():
 
     if syote is not None:
 
-        # this is the tdf if search we used earlier
+        syote = rewrite_query(syote)
 
         query_vec = gv.transform([syote]).tocsc()
 
