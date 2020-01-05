@@ -12,6 +12,7 @@ body {
     </head>
     <body>
         <h1 style="color:navy;">Etsi YLE:n uutisista</h1>
+        <h3>Englanninkielisiä artikkeleja on {{ doc_counter }} kpl</h3>
         <!--Reload the page with variable "query" in the URL-->
         <form>
             <input type="text" name="query" autofocus>
@@ -28,6 +29,7 @@ body {
 </div>
 
         <table>
+
             <!--Go through each item in the "matches" variable sent from
                 search() function in the Flask app-->
             {% for item in matches %}

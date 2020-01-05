@@ -12,6 +12,10 @@ def remove_duplicate_links(x):
     return list(dict.fromkeys(x))
 
 
+def doc_counter():
+    return str(len(artikkelit))
+
+
 url = "https://yle.fi/uutiset/osasto/news/"
 html = rq.urlopen(url).read().decode('utf8')
 soup = BeautifulSoup(html, 'html.parser')
@@ -33,6 +37,8 @@ for linkki in linkit[3:-4]: # sliced off some non-news links such as an address 
     kappaleet = " ".join(kappaleet)
     artikkelit.append(kappaleet)
     puhtaat_linkit.append(linkki)
+
+
 
 links_and_articles = list(zip(puhtaat_linkit, artikkelit))
 
@@ -67,10 +73,9 @@ g_matrix = gv.fit_transform(documents).T.tocsr()
 @app.route("/")
 def home():
 
-    #get query from URL variable
     syote = request.args.get('query')
-
     matches = []
+    doc_counter()
 
     if syote is not None:
 
@@ -91,7 +96,8 @@ def home():
             doc = documents[doc_idx]
             matches.append({'score': score, 'name': doc[:300]})
 
-    return render_template("yle-haku.html", matches=matches)
+    return render_template("yle-haku.html", matches=matches, doc_counter=doc_counter())
+
 
 if __name__ == "__main__":
     app.run(debug=True)
